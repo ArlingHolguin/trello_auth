@@ -45,11 +45,11 @@ export class RegisterFormComponent {
       this.status = 'loading';
       const { name, email, password } = this.form.getRawValue();
       //hacermos la conexion al servicio de auth para hacer el registro
-      this.authService.register(name, email, password).subscribe(
+      this.authService.registerAndLogin(name, email, password).subscribe(
         {
           next: () => {
             this.status = 'success';
-            this.router.navigate(['/login']);
+            this.router.navigate(['/app/boards']);
           },
           error: () => {
             this.status = 'failed';
