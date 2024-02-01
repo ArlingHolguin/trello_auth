@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { faPen, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { RequestStatus } from '@models/request-status-model';
 
@@ -27,8 +27,18 @@ export class LoginFormComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     //inyectar el servicio de auth
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    //inyectar activatedRoute
+    private route: ActivatedRoute
+  ) {
+    // Obtener el query param de la url y setearlo en el campo email
+    this.route.queryParamMap.subscribe(params => {
+      const email = params.get('email');
+      if (email) {
+        this.form.get('email')?.setValue(email);
+      }
+    });
+   }
 
   doLogin() {
     if (this.form.valid) {
