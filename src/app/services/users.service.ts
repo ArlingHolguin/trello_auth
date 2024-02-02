@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { TokenService } from './token.service';
 import { User } from '@models/user.model';
+import { checkToken } from '@interceptors/token.interceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,10 @@ export class UsersService {
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService 
+    private tokenService: TokenService
   ) { }
 
   getUsers(){
-    const token = this.tokenService.getToken();
-    return this.http.get<User[]>(`${this.apiURL}api/v1/users`,{
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
+    return this.http.get<User[]>(`${this.apiURL}api/v1/users`,{ context: checkToken() });
   }
 }
