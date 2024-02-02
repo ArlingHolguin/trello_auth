@@ -26,7 +26,7 @@ export class NavbarComponent {
   constructor(
     //inyectar el servicio de auth
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   logout() {
@@ -35,6 +35,8 @@ export class NavbarComponent {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  
 
   
 }
